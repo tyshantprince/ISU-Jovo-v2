@@ -1,20 +1,41 @@
-[![Jovo Framework](https://www.jovo.tech/img/github-logo.png)](https://www.jovo.tech)
+# Welcome to ISU's Voice Service
 
-<p align="center">Templates for the <a href="https://github.com/jovotech/jovo-framework-nodejs">Jovo Framework</a> ⭐️</p>
+#### What You NEED
 
-<p align="center">
-<a href="https://www.jovo.tech/framework/docs/"><strong>Documentation</strong></a> -
-<a href="https://github.com/jovotech/jovo-cli"><strong>CLI </strong></a> - <a href="https://github.com/jovotech/jovo-framework-nodejs/blob/master/CONTRIBUTING.md"><strong>Contributing</strong></a> - <a href="https://twitter.com/jovotech"><strong>Twitter</strong></a></p>
-<br/>
+- Node/NPM
+- Amazon Developer Account
+- ASK CLI
+- Jovo CLI
 
-# Template: Hello World
+# To Install
+1. Clone Git Repository
+2. NPM Install node packages
+3. Jovo Build
+4. Jovo Deploy
+5. Jovo Run
+6. Test Skill on Amazon Developer Console
 
-Jovo Sample Voice App with a simple "Hello World!" + asking for the user's name. This is the default template for the `jovo new` command:
+### Invocation name : I.S.U
 
-```sh
-$ jovo new <directory>
+##### Example
+###### "Alexa Open I.S.U"
+###### "Alexa tell I.S.U I need tech support" 
 
-## Alternative
-$ jovo new <directory> --template helloworld
-```
+##### INTENTS
 
+- Hello ISU
+- Financial Aid
+- ISU Fact
+- Techology Problems
+- Tech Zone
+- RES NET
+- IT HELP 
+
+### ISU Fact Intent example
+
+![example image](capture1.PNG)
+
+
+### ISU Technology Problems/Tech Zone Intent
+
+![example image](capture2.PNG)
