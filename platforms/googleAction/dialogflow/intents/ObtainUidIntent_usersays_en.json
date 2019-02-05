@@ -1,0 +1,46 @@
+[
+	{
+		"data": [
+			{
+				"text": "my ulid is ",
+				"userDefined": false
+			},
+			{
+				"text": "uid",
+				"userDefined": true,
+				"alias": "uid",
+				"meta": "@sys.number"
+			}
+		],
+		"isTemplate": false,
+		"count": 0
+	},
+	{
+		"data": [
+			{
+				"text": "my university number is ",
+				"userDefined": false
+			},
+			{
+				"text": "uid",
+				"userDefined": true,
+				"alias": "uid",
+				"meta": "@sys.number"
+			}
+		],
+		"isTemplate": false,
+		"count": 0
+	},
+	{
+		"data": [
+			{
+				"text": "uid",
+				"userDefined": true,
+				"alias": "uid",
+				"meta": "@sys.number"
+			}
+		],
+		"isTemplate": false,
+		"count": 0
+	}
+]

@@ -1,0 +1,50 @@
+{
+	"interactionModel": {
+		"languageModel": {
+			"invocationName": "i.s.u",
+			"types": [],
+			"intents": [
+				{
+					"name": "YesIntent",
+					"samples": [
+						"Yes",
+						"yes"
+					]
+				},
+				{
+					"name": "NoIntent",
+					"samples": [
+						"No",
+						"no"
+					]
+				},
+				{
+					"name": "ObtainUidIntent",
+					"samples": [
+						"my ulid is {uid}",
+						"my university number is {uid}",
+						"{uid}"
+					],
+					"slots": [
+						{
+							"name": "uid",
+							"type": "AMAZON.NUMBER"
+						}
+					]
+				},
+				{
+					"name": "AMAZON.CancelIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.HelpIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.StopIntent",
+					"samples": []
+				}
+			]
+		}
+	}
+}

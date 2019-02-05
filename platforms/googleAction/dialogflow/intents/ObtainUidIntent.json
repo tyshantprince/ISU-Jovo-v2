@@ -1,0 +1,17 @@
+{
+	"name": "ObtainUidIntent",
+	"auto": true,
+	"webhookUsed": true,
+	"responses": [
+		{
+			"parameters": [
+				{
+					"isList": false,
+					"name": "uid",
+					"value": "$uid",
+					"dataType": "@sys.number"
+				}
+			]
+		}
+	]
+}

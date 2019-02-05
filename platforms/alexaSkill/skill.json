@@ -1,0 +1,30 @@
+{
+	"manifest": {
+		"apis": {
+			"custom": {
+				"endpoint": {
+					"sslCertificateType": "Wildcard",
+					"uri": "https://webhook.jovo.cloud/a9ebbeb5-ea6a-44a1-9ebf-27afebe1291a"
+				},
+				"interfaces": []
+			}
+		},
+		"manifestVersion": "1.0",
+		"publishingInformation": {
+			"locales": {
+				"en-US": {
+					"name": "ISU",
+					"summary": "Sample Short Description",
+					"description": "Sample Full Description",
+					"examplePhrases": [
+						"Alexa open hello world"
+					]
+				}
+			},
+			"isAvailableWorldwide": true,
+			"testingInstructions": "Sample Testing Instructions.",
+			"category": "EDUCATION_AND_REFERENCE",
+			"distributionCountries": []
+		}
+	}
+}

@@ -1,0 +1,76 @@
+{
+	"invocation": "i.s.u",
+	"intents": [
+		{
+		"name": "YesIntent",
+		"phrases": [
+			"Yes",
+			"yes"
+		]
+	},
+	{
+		"name": "NoIntent",
+		"phrases": [
+			"No",
+			"no"
+		]
+	},
+	{
+		"name": "ObtainUidIntent",
+		"phrases": [
+			"my ulid is {uid}",
+			"my university number is {uid}", 
+			"{uid}"
+		],
+		"inputs": [
+			{
+				"name": "uid",
+				"type": {
+					"alexa": "AMAZON.NUMBER",
+					"dialogflow": "@sys.number"
+				}
+			}
+		]
+	}
+],
+	"alexa": {
+		"interactionModel": {
+			"languageModel": {
+				"intents": [
+					{
+						"name": "AMAZON.CancelIntent",
+						"samples": []
+					},
+					{
+						"name": "AMAZON.HelpIntent",
+						"samples": []
+					},
+					{
+						"name": "AMAZON.StopIntent",
+						"samples": []
+					}
+				]
+			}
+		}
+	},
+	"dialogflow": {
+		"intents": [
+			{
+				"name": "Default Fallback Intent",
+				"auto": true,
+				"webhookUsed": true,
+				"fallbackIntent": true
+			},
+			{
+				"name": "Default Welcome Intent",
+				"auto": true,
+				"webhookUsed": true,
+				"events": [
+					{
+						"name": "WELCOME"
+					}
+				]
+			}
+		]
+	}
+}

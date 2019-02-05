@@ -1,0 +1,14 @@
+{
+  "accountLinkingResponse": {
+    "accessTokenScheme": "HTTP_BASIC",
+    "accessTokenUrl": "https://account-dev.illinoisstate.edu:443/oauth2/rest/token",
+    "authorizationUrl": "https://account-dev.illinoisstate.edu:443/oauth2/rest/authorize",
+    "clientId": "ILSTU_OAuth_ID",
+    "domains": [
+      "cdn.illinoisstate.edu",
+      "cdn.ilstu.edu"
+    ],
+    "skipOnEnablement": false,
+    "type": "AUTH_CODE"
+  }
+}
