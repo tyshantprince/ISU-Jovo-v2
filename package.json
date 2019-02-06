@@ -4,11 +4,11 @@
   "description": "A sample voice app that works with the Jovo Framework",
   "main": "src/index.js",
   "dependencies": {
-    "jovo-db-filedb": "^2.0.2",
-    "jovo-framework": "^2.0.11",
-    "jovo-platform-alexa": "^2.0.2",
-    "jovo-platform-googleassistant": "^2.0.2",
-    "jovo-plugin-debugger": "^2.0.2"
+    "jovo-db-filedb": "^2.0.13",
+    "jovo-framework": "^2.0.14",
+    "jovo-platform-alexa": "^2.0.17",
+    "jovo-platform-googleassistant": "^2.0.16",
+    "jovo-plugin-debugger": "^2.0.13"
   },
   "devDependencies": {
     "gulp": "^4.0.0",

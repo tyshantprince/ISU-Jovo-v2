@@ -2,7 +2,7 @@
 	{
 		"data": [
 			{
-				"text": "my ulid is ",
+				"text": "my uid is ",
 				"userDefined": false
 			},
 			{
@@ -33,6 +33,10 @@
 	},
 	{
 		"data": [
+			{
+				"text": "my uid number is ",
+				"userDefined": false
+			},
 			{
 				"text": "uid",
 				"userDefined": true,

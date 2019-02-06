@@ -29,7 +29,7 @@ app.setHandler({
 
         if (!this.$user.isNew()) {
             let speech = this.speechBuilder()
-                .addText("Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Welcome back " + this.$user.$data.name + ", what can I assist you with? ")
+                // .addText("Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Welcome back " + this.$user.$data.name + ", what can I assist you with? ")
             this.ask(speech);
         }
         else
@@ -57,8 +57,7 @@ app.setHandler({
     },
 
     Unhandled() {
-        console.log("Data \n\n\n\n\n\n\n\n\n\n\n\n" + this.$inputs)
-        this.tell('This shit not working');
+        console.log("Data" + this.$inputs)
     },
 
 });

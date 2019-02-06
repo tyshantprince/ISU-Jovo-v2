@@ -18,9 +18,9 @@
 	{
 		"name": "ObtainUidIntent",
 		"phrases": [
-			"my ulid is {uid}",
+			"my uid is {uid}",
 			"my university number is {uid}", 
-			"{uid}"
+			"my uid number is {uid}"
 		],
 		"inputs": [
 			{
