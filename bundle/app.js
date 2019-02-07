@@ -27,9 +27,9 @@ app.use(
 app.setHandler({
     LAUNCH() {
 
-        if (!this.$user.isNew()) {
+        if (!this.getAccessToken()){
             let speech = this.speechBuilder()
-                // .addText("Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Welcome back " + this.$user.$data.name + ", what can I assist you with? ")
+                .addText("Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Welcome back " + this.$user.$data.name + ", what can I assist you with? ")
             this.ask(speech);
         }
         else
@@ -41,18 +41,19 @@ app.setHandler({
     InfoState: {
 
         YesIntent() {
-            this.ask('What is your eight digit U.I.D number?');
+            this.$alexaSkill.showAccountLinkingCard();
+            this.tell("Please Link Your Account");
         },
 
         NoIntent() {
-            this.tell('I said no');
+            this.tell('As a guest, you have limited access to the features of Illinois State University\'s voice service.' );
 
         },
-        ObtainUidIntent() {
-            this.$user.$data.uid = this.$inputs.ulid;
-            this.tell("U.I.D has been updated");
+    },
 
-        }
+     ObtainUidIntent() {
+         this.$user.$data.uid = this.$inputs.uid;
+         this.tell("U.I.D has been updated");
 
     },
 
