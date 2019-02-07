@@ -31,6 +31,82 @@
 				}
 			}
 		]
+	},
+	{
+		"name": "ObtainNameIntent",
+		"phrases": [
+			"my name is {name}",
+			"I am {name}",
+			"{name}"
+		],
+		"inputs": [{
+			"name": "name",
+			"type": {
+				"alexa": "AMAZON.US_FIRST_NAME",
+				"dialogflow": "sys.given-name"
+			}
+		}]
+	},
+	{
+		"name": "FinancialAidIntent",
+		"phrases": [
+			"financial aid",
+			"contact financial aid",
+			"how can I contact financial aid"
+		]
+	}, 
+	{
+		"name": "FinancialAidAdvisorIntent",
+		"phrases": [
+			"financial aid advisor",
+			"Who is my finanical aid advisor"
+		]
+	},
+	 {
+		"name": "ISUFactIntent",
+		"phrases": [
+			"tell me about i.s.u",
+			"give me a fact about i.s.u",
+			"give me a fact",
+			"tell me something I don't know",
+			"tell me a fact"
+		]
+	}, 
+	{
+		"name": "ISUTechProblemsIntent",
+		"phrases": [
+			"I'm having computer problems",
+			"my laptop is not working",
+			"where can i get tech support",
+			"I need tech support"
+		]
+	}, 
+	{
+		"name": "ISUTechZoneIntent",
+		"phrases": [
+			"tech zone",
+			"techzone",
+			"tell me about tech zone",
+			"how do i contact tech zone"
+		]
+	}, 
+	{
+		"name": "ISUResNetIntent",
+		"phrases": [
+			"Res Net",
+			"resnet",
+			"tell me about res net",
+			"how do i contact res net"
+		]
+	}, 
+	{
+		"name": "ISUITHelpIntent",
+		"phrases": [
+			"IT Help",
+			"ithelp",
+			"tell me about it help",
+			"how do i contact it help"
+		]
 	}
 ],
 	"alexa": {
@@ -47,6 +123,10 @@
 					},
 					{
 						"name": "AMAZON.StopIntent",
+						"samples": []
+					},
+					{
+						"name": "AMAZON.RepeatIntent",
 						"samples": []
 					}
 				]

@@ -33,6 +33,81 @@
 					]
 				},
 				{
+					"name": "ObtainNameIntent",
+					"samples": [
+						"my name is {name}",
+						"I am {name}",
+						"{name}"
+					],
+					"slots": [
+						{
+							"name": "name",
+							"type": "AMAZON.US_FIRST_NAME"
+						}
+					]
+				},
+				{
+					"name": "FinancialAidIntent",
+					"samples": [
+						"financial aid",
+						"contact financial aid",
+						"how can I contact financial aid"
+					]
+				},
+				{
+					"name": "FinancialAidAdvisorIntent",
+					"samples": [
+						"financial aid advisor",
+						"Who is my finanical aid advisor"
+					]
+				},
+				{
+					"name": "ISUFactIntent",
+					"samples": [
+						"tell me about i.s.u",
+						"give me a fact about i.s.u",
+						"give me a fact",
+						"tell me something I don't know",
+						"tell me a fact"
+					]
+				},
+				{
+					"name": "ISUTechProblemsIntent",
+					"samples": [
+						"I'm having computer problems",
+						"my laptop is not working",
+						"where can i get tech support",
+						"I need tech support"
+					]
+				},
+				{
+					"name": "ISUTechZoneIntent",
+					"samples": [
+						"tech zone",
+						"techzone",
+						"tell me about tech zone",
+						"how do i contact tech zone"
+					]
+				},
+				{
+					"name": "ISUResNetIntent",
+					"samples": [
+						"Res Net",
+						"resnet",
+						"tell me about res net",
+						"how do i contact res net"
+					]
+				},
+				{
+					"name": "ISUITHelpIntent",
+					"samples": [
+						"IT Help",
+						"ithelp",
+						"tell me about it help",
+						"how do i contact it help"
+					]
+				},
+				{
 					"name": "AMAZON.CancelIntent",
 					"samples": []
 				},
@@ -42,6 +117,10 @@
 				},
 				{
 					"name": "AMAZON.StopIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.RepeatIntent",
 					"samples": []
 				}
 			]
