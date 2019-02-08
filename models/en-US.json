@@ -43,7 +43,7 @@
 			"name": "name",
 			"type": {
 				"alexa": "AMAZON.US_FIRST_NAME",
-				"dialogflow": "sys.given-name"
+				"dialogflow": "@sys.given-name"
 			}
 		}]
 	},
