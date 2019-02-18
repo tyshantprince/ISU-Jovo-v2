@@ -157,7 +157,64 @@ app.setHandler({
 
          this.tell('Your Financial Aid Advisor is ' + advisor);
 
-     },
+    },
+    ISUEventsIntent() {
+        const chilkat = require('@chilkat/ck-node10-macosx');
+
+
+        var FEED_URL = 'http://feeds.illinoisstate.edu/events-hub/organizer-office-of-the-university-registrar.rss';
+        var rss = new chilkat.Rss();
+
+        // Download from the feed URL:
+        var success = rss.DownloadRss(FEED_URL);
+        if (success !== true) {
+            console.log(rss.LastErrorText);
+            return;
+        }
+
+        // Get the 1st channel.
+        // rssChannel: Rss
+        var rssChannel;
+
+        rssChannel = rss.GetChannel(0);
+        if (rssChannel == null) {
+            console.log("No channel found in RSS feed.");
+            return;
+        }
+
+        // Display the various pieces of information about the channel:
+        console.log("Title: " + rssChannel.GetString("title"));
+        console.log("Link: " + rssChannel.GetString("link"));
+        console.log("Description: " + rssChannel.GetString("description"));
+
+        // For each item in the channel, display the title, link,
+        // publish date, and categories assigned to the post.
+        var numItems = rssChannel.NumItems;
+        var i;
+
+        for (i = 0; i <= numItems - 1; i++) {
+            // rssItem: Rss
+            var rssItem = rssChannel.GetItem(i);
+
+            console.log("----");
+            console.log("Title: " + rssItem.GetString("title"));
+            console.log("Link: " + rssItem.GetString("link"));
+            console.log("pubDate: " + rssItem.GetString("pubDate"));
+
+            var numCategories = rssItem.GetCount("category");
+            var j;
+            if (numCategories > 0) {
+                for (j = 0; j <= numCategories - 1; j++) {
+                    console.log("    category: " + rssItem.MGetString("category", j));
+                }
+
+            }
+
+        }
+
+        
+
+    },
      
      RepeatIntent() {
          this.repeat();

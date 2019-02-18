@@ -107,6 +107,12 @@
 			"tell me about it help",
 			"how do i contact it help"
 		]
+	},
+	{
+		"name": "ISUEventsIntent",
+		"phrases":[
+			"what is going on today"
+		]
 	}
 ],
 	"alexa": {
