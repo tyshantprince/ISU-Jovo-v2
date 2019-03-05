@@ -1,5 +1,5 @@
 {
-	"name": "ObtainUidIntent",
+	"name": "ObtainNameIntent",
 	"auto": true,
 	"webhookUsed": true,
 	"responses": [
@@ -7,9 +7,9 @@
 			"parameters": [
 				{
 					"isList": false,
-					"name": "uid",
-					"value": "$uid",
-					"dataType": "@sys.number"
+					"name": "name",
+					"value": "$name",
+					"dataType": "@sys.given-name"
 				}
 			]
 		}

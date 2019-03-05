@@ -1,0 +1,5 @@
+{
+	"name": "ISUEventsIntent",
+	"auto": true,
+	"webhookUsed": true
+}

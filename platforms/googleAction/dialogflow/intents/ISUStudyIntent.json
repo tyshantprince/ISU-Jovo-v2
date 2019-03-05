@@ -1,0 +1,17 @@
+{
+	"name": "ISUStudyIntent",
+	"auto": true,
+	"webhookUsed": true,
+	"responses": [
+		{
+			"parameters": [
+				{
+					"isList": false,
+					"name": "duration",
+					"value": "$duration",
+					"dataType": "@sys.date-time"
+				}
+			]
+		}
+	]
+}

@@ -19,20 +19,6 @@
 					]
 				},
 				{
-					"name": "ObtainUidIntent",
-					"samples": [
-						"my uid is {uid}",
-						"my university number is {uid}",
-						"my uid number is {uid}"
-					],
-					"slots": [
-						{
-							"name": "uid",
-							"type": "AMAZON.NUMBER"
-						}
-					]
-				},
-				{
 					"name": "ObtainNameIntent",
 					"samples": [
 						"my name is {name}",
@@ -43,6 +29,18 @@
 						{
 							"name": "name",
 							"type": "AMAZON.US_FIRST_NAME"
+						}
+					]
+				},
+				{
+					"name": "ISUStudyIntent",
+					"samples": [
+						"I want to study for {duration}"
+					],
+					"slots": [
+						{
+							"name": "duration",
+							"type": "AMAZON.DURATION"
 						}
 					]
 				},

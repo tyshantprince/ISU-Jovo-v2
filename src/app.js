@@ -10,6 +10,8 @@ const { GoogleAssistant } = require('jovo-platform-googleassistant');
 const { JovoDebugger } = require('jovo-plugin-debugger');
 const { FileDb } = require('jovo-db-filedb');
 
+ const iso = require('iso8601-duration');
+
 const app = new App();
 
 app.use(
@@ -27,35 +29,58 @@ app.use(
 app.setHandler({
     LAUNCH() {
 
-        if (!this.getAccessToken()){
+        if (!this.$user.isNew()){
             let speech = this.speechBuilder()
                 .addText("Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Welcome back " + this.$user.$data.name + ", what can I assist you with? ")
             this.ask(speech);
         }
         else
-            var speech = 'Are you an I.S.U student?';
+            var speech = 'Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Before we get started, I have to ask,  Are you an I.S.U student?';
             var reprompt = 'Answer this with a yes or no';
             this.followUpState('InfoState').ask(speech, reprompt);
     },
 
     InfoState: {
-
         YesIntent() {
             this.$alexaSkill.showAccountLinkingCard();
-            this.tell("Please Link Your Account");
+            this.tell("Okay, please link Your Account so that we know a little more about you.");
         },
 
         NoIntent() {
-            this.tell('As a guest, you have limited access to the features of Illinois State University\'s voice service.' );
-
+            this.tell('As a guest, you have limited access to the features of Illinois State University\'s voice service.');
         },
     },
 
-     ObtainUidIntent() {
-         this.$user.$data.uid = this.$inputs.uid;
-         this.tell("U.I.D has been updated");
+    async ISUStudyIntent() {
+        let duration = this.$inputs.duration;
 
+        console.log("duration: " + iso.toSeconds(iso.parse(duration.value)));
+
+            const reminder = {
+                "trigger": {
+                    "type": "SCHEDULED_RELATIVE",
+                    "offsetInSeconds": duration,
+                }
+            };
+
+            try {
+                const result = await this.$alexaSkill.$user.setReminder(reminder);
+
+                this.tell('You are now in study mode for ');
+
+            } catch (error) {
+                if (error.code === 'NO_USER_PERMISSION') {
+                    this.tell('Please grant the permission to set reminders.');
+                } else {
+                    console.error(error);
+                    // Do something
+                }
+            }
+        // expected duration of study session (i.e : 30 mins, 1 hour, 2 hours)
+        // sets time to study
+        // alerts come to your phone when study session is done.
     },
+
      ISUTechProblemsIntent() {
          this.ask("At Illinois State University, for technology related issues, you can visit Tech Zone Service Center located in the Bone, contact I.S.U ResNet, or contact the University Tech Support Center. Which service would you like more information on?")
      },
@@ -211,9 +236,6 @@ app.setHandler({
             }
 
         }
-
-        
-
     },
      
      RepeatIntent() {

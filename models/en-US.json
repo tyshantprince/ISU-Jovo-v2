@@ -16,23 +16,6 @@
 		]
 	},
 	{
-		"name": "ObtainUidIntent",
-		"phrases": [
-			"my uid is {uid}",
-			"my university number is {uid}", 
-			"my uid number is {uid}"
-		],
-		"inputs": [
-			{
-				"name": "uid",
-				"type": {
-					"alexa": "AMAZON.NUMBER",
-					"dialogflow": "@sys.number"
-				}
-			}
-		]
-	},
-	{
 		"name": "ObtainNameIntent",
 		"phrases": [
 			"my name is {name}",
@@ -47,6 +30,20 @@
 			}
 		}]
 	},
+	{
+		"name": "ISUStudyIntent",
+		"phrases": [
+			"I want to study for {duration}"
+		],
+		"inputs":[{
+			"name":"duration",
+			"type":{
+				"alexa": "AMAZON.DURATION",
+				"dialogflow": "@sys.date-time"
+			}
+		}]
+	},
+
 	{
 		"name": "FinancialAidIntent",
 		"phrases": [

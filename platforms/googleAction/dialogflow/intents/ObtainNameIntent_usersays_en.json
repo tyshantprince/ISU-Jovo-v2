@@ -2,14 +2,14 @@
 	{
 		"data": [
 			{
-				"text": "my uid is ",
+				"text": "my name is ",
 				"userDefined": false
 			},
 			{
-				"text": "uid",
+				"text": "name",
 				"userDefined": true,
-				"alias": "uid",
-				"meta": "@sys.number"
+				"alias": "name",
+				"meta": "@sys.given-name"
 			}
 		],
 		"isTemplate": false,
@@ -18,14 +18,14 @@
 	{
 		"data": [
 			{
-				"text": "my university number is ",
+				"text": "I am ",
 				"userDefined": false
 			},
 			{
-				"text": "uid",
+				"text": "name",
 				"userDefined": true,
-				"alias": "uid",
-				"meta": "@sys.number"
+				"alias": "name",
+				"meta": "@sys.given-name"
 			}
 		],
 		"isTemplate": false,
@@ -34,14 +34,10 @@
 	{
 		"data": [
 			{
-				"text": "my uid number is ",
-				"userDefined": false
-			},
-			{
-				"text": "uid",
+				"text": "name",
 				"userDefined": true,
-				"alias": "uid",
-				"meta": "@sys.number"
+				"alias": "name",
+				"meta": "@sys.given-name"
 			}
 		],
 		"isTemplate": false,

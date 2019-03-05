@@ -1,0 +1,18 @@
+[
+	{
+		"data": [
+			{
+				"text": "I want to study for ",
+				"userDefined": false
+			},
+			{
+				"text": "duration",
+				"userDefined": true,
+				"alias": "duration",
+				"meta": "@sys.date-time"
+			}
+		],
+		"isTemplate": false,
+		"count": 0
+	}
+]
