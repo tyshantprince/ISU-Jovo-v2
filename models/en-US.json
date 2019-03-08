@@ -110,6 +110,20 @@
 		"phrases":[
 			"what is going on today"
 		]
+	},
+	{
+		"name": "ISUSportsIntent",
+		"phrases": [
+			"tell me about sports",
+			"tell me about i.s.u sports",
+			"tell me about Illinois State Sports"
+		]
+	},
+	{
+		"name": "ISUBaseballIntent",
+		"phrases": [
+			"baseball"
+		]
 	}
 ],
 	"alexa": {

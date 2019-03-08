@@ -10,6 +10,9 @@ const { GoogleAssistant } = require('jovo-platform-googleassistant');
 const { JovoDebugger } = require('jovo-plugin-debugger');
 const { FileDb } = require('jovo-db-filedb');
 
+const iso = require('iso8601-duration');
+const axios = require('axios');
+
 const app = new App();
 
 app.use(
@@ -29,7 +32,7 @@ app.setHandler({
 
         if (!this.$user.isNew()){
             let speech = this.speechBuilder()
-                .addText("Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Welcome back " + this.$user.$data.name + ", what can I assist you with? ")
+                .addText("Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Welcome back " + this.$user.$data.name.value + ", what can I assist you with? ")
             this.ask(speech);
         }
         else
@@ -52,19 +55,29 @@ app.setHandler({
     async ISUStudyIntent() {
         let duration = this.$inputs.duration;
 
-        console.log("duration: " + duration);
-
             const reminder = {
                 "trigger": {
                     "type": "SCHEDULED_RELATIVE",
-                    "offsetInSeconds": 3600,
+                    "offsetInSeconds": iso.toSeconds(iso.parse(duration.value)),
+                },
+                "alertInfo": {
+                    "spokenInfo": {
+                        "content": [{
+                            "locale": "en-US",
+                            "text": "You have studied for " + iso.toSeconds(iso.parse(duration.value)) / 3600 + " hour."
+                        }]
+                    }
+                },
+                "pushNotification": {
+                    "status": "ENABLED"
                 }
+
             };
 
             try {
                 const result = await this.$alexaSkill.$user.setReminder(reminder);
 
-                this.tell('Reminder has been set.');
+                this.tell('You are now in study mode. Focus and cut off all distractions');
 
             } catch (error) {
                 if (error.code === 'NO_USER_PERMISSION') {
@@ -74,9 +87,6 @@ app.setHandler({
                     // Do something
                 }
             }
-        // expected duration of study session (i.e : 30 mins, 1 hour, 2 hours)
-        // sets time to study
-        // alerts come to your phone when study session is done.
     },
 
      ISUTechProblemsIntent() {
@@ -181,59 +191,44 @@ app.setHandler({
          this.tell('Your Financial Aid Advisor is ' + advisor);
 
     },
+    
+    ISUSportsIntent() {
+        this.ask('Which sport would you like to know more about?');
+    },
+    ISUSportsEventsIntent() {
+        if (this.$inputs.sport.toLowerCase == "baseball") {
+            this.toIntent("ISUBaseballIntent")
+        }
+    },
+    ISUBaseballIntent() {
+        axios.get("https://goredbirds.com/rss.aspx?path=baseball")
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        
+        this.tell('I made it here');
+    }
+    ,
     ISUEventsIntent() {
-        const chilkat = require('@chilkat/ck-node10-macosx');
-
-
+        var request = new XMLHttpRequest();
         var FEED_URL = 'http://feeds.illinoisstate.edu/events-hub/organizer-office-of-the-university-registrar.rss';
-        var rss = new chilkat.Rss();
 
-        // Download from the feed URL:
-        var success = rss.DownloadRss(FEED_URL);
-        if (success !== true) {
-            console.log(rss.LastErrorText);
-            return;
+        request.open("GET", FEED_URL, false);
+        request.send();
+        var xml = request.responseXML;
+        // console.log(xml);
+        var items = xml.getElementsByTagName("item");
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            var title = item.getElementsByTagName("title");
+            var start = item.getElementsByTagName("start");
+
+            console.log(start[0].attributes.longdate);
         }
 
-        // Get the 1st channel.
-        // rssChannel: Rss
-        var rssChannel;
-
-        rssChannel = rss.GetChannel(0);
-        if (rssChannel == null) {
-            console.log("No channel found in RSS feed.");
-            return;
-        }
-
-        // Display the various pieces of information about the channel:
-        console.log("Title: " + rssChannel.GetString("title"));
-        console.log("Link: " + rssChannel.GetString("link"));
-        console.log("Description: " + rssChannel.GetString("description"));
-
-        // For each item in the channel, display the title, link,
-        // publish date, and categories assigned to the post.
-        var numItems = rssChannel.NumItems;
-        var i;
-
-        for (i = 0; i <= numItems - 1; i++) {
-            // rssItem: Rss
-            var rssItem = rssChannel.GetItem(i);
-
-            console.log("----");
-            console.log("Title: " + rssItem.GetString("title"));
-            console.log("Link: " + rssItem.GetString("link"));
-            console.log("pubDate: " + rssItem.GetString("pubDate"));
-
-            var numCategories = rssItem.GetCount("category");
-            var j;
-            if (numCategories > 0) {
-                for (j = 0; j <= numCategories - 1; j++) {
-                    console.log("    category: " + rssItem.MGetString("category", j));
-                }
-
-            }
-
-        }
     },
      
      RepeatIntent() {

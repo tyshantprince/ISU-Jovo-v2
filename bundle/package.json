@@ -4,6 +4,8 @@
   "description": "A sample voice app that works with the Jovo Framework",
   "main": "./index.js",
   "dependencies": {
+    "axios": "^0.18.0",
+    "iso8601-duration": "^1.1.7",
     "jovo-db-filedb": "^2.0.15",
     "jovo-framework": "^2.0.16",
     "jovo-platform-alexa": "^2.0.19",

@@ -112,6 +112,20 @@
 					]
 				},
 				{
+					"name": "ISUSportsIntent",
+					"samples": [
+						"tell me about sports",
+						"tell me about i.s.u sports",
+						"tell me about Illinois State Sports"
+					]
+				},
+				{
+					"name": "ISUBaseballIntent",
+					"samples": [
+						"baseball"
+					]
+				},
+				{
 					"name": "AMAZON.CancelIntent",
 					"samples": []
 				},
