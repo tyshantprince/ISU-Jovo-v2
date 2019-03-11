@@ -14,6 +14,7 @@ const iso = require('iso8601-duration');
 const axios = require('axios');
 const rp = require('request-promise');
 const xml2json = require('xml2json');
+const moment = require('moment');
 
 const app = new App();
 
@@ -33,7 +34,7 @@ app.setHandler({
     async LAUNCH() {
         if (this.$user.isNew()){
             if (!this.$request.getAccessToken()) {
-                let speech = 'Powered by Amazon Alexa. Before we get started, I have to ask,  Are you an I.S.U student?';
+                let speech = 'Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Before we get started, I have to ask,  Are you an I.S.U student?';
                 var reprompt = 'Answer this with a yes or no';
                 this.followUpState('InfoState').ask(speech, reprompt);
             }
@@ -50,7 +51,7 @@ app.setHandler({
                 await rp(options).then((body) => {
                     let data = JSON.parse(body);
                     this.$user.$data.name = data.name;
-                     let speech = 'I can see that you are a brand new user. I want you to create a 4 digit pin to keep your personal information more secure. Please say your four digit pin now.';
+                     let speech = 'Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. I can see that you are a brand new user. I want you to create a 4 digit pin to keep your personal information more secure. Please say your four digit pin now.';
                      var reprompt = 'Please say your four digit pin code';
                      this.followUpState('PinState').ask(speech, reprompt);
                 });
@@ -177,8 +178,7 @@ app.setHandler({
                     Through Friday from eight a.m to four-thirty p.m. <break time ="1s"/> You can contact them via phone at (309) 438-2231.`)
      },
 
-     FinancialAidAdvisorIntent() {
-
+    FinancialAidAdvisorIntent() {
          if (!this.getAccessToken()){
              this.toIntent('LAUNCH');
          }
@@ -240,16 +240,27 @@ app.setHandler({
             this.toIntent("ISUBaseballIntent")
         }
     },
-    ISUBaseballIntent() {
-        axios.get("https://goredbirds.com/rss.aspx?path=baseball")
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        
-        this.tell('I made it here');
+    async ISUBaseballIntent() {
+        var my_xml_string = "";
+         var options = {
+             method: 'GET',
+             uri: 'https://goredbirds.com/rss.aspx?path=baseball',
+             headers: {
+                 'User-Agent': 'Request-Promise',
+                 'Content-Type': 'text/xml',
+                 'Content-Length': Buffer.byteLength(my_xml_string)
+             },
+             body: my_xml_string,
+             json: true
+         };
+
+         await rp(options).then((body) => {
+            let data = JSON.parse(xml2json.toJson(body));
+            let items = data.rss.channel.item;
+            var myDate = moment(new Date(items[0].pubDate)).format('MMMM Do YYYY');
+
+            this.tell("On " + myDate + ", " + items[0].title);
+         });
     }
     ,
     ISUEventsIntent() {
@@ -279,7 +290,7 @@ app.setHandler({
          await rp(options).then((body) => {
              let data = JSON.parse(xml2json.toJson(body));
              this.$user.$data.balance = data.person.plans.plan.balance;
-             this.tell("Your rebird card has a balance of " + this.$user.$data.balance);
+             this.tell("Your redbird card has a balance of " + this.$user.$data.balance);
          });
     },
      
