@@ -50,7 +50,9 @@ app.setHandler({
                 await rp(options).then((body) => {
                     let data = JSON.parse(body);
                     this.$user.$data.name = data.name;
-                    this.tell("I can see that you are a brand new user. Your account has been updated. Please restart this skill to see changes");
+                     let speech = 'I can see that you are a brand new user. I want you to create a 4 digit pin to keep your personal information more secure. Please say your four digit pin now.';
+                     var reprompt = 'Please say your four digit pin code';
+                     this.followUpState('PinState').ask(speech, reprompt);
                 });
             }
         }
@@ -72,6 +74,23 @@ app.setHandler({
         },
     },
 
+    PinState: {
+        PinCodeIntent() {
+            this.$user.$data.pin = this.$inputs.pin;
+            let speech = "Your pin code has been created. If the pin code  " + this.$user.$data.pin.value + " is correct, please confirm by saying , correct. If not, say reset";
+            this.followUpState('ConfirmPinState').ask(speech);
+        },
+    },
+    ConfirmPinState: {
+        ConfirmPinIntent() {
+                this.tell("You have successfully created a four digit pin for your account");
+        },
+        DeclinePinIntent() {
+             let speech = 'I can see that you are a brand new user. I want you to create a 4 digit pin to keep your personal information more secure. Please say your four digit pin now.';
+             var reprompt = 'Please say your four digit pin code';
+             this.followUpState('PinState').ask(speech, reprompt);
+        }
+    },
     async ISUStudyIntent() {
         let duration = this.$inputs.duration;
         var now = new Date();

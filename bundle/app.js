@@ -13,6 +13,7 @@ const { FileDb } = require('jovo-db-filedb');
 const iso = require('iso8601-duration');
 const axios = require('axios');
 const rp = require('request-promise');
+const xml2json = require('xml2json');
 
 const app = new App();
 
@@ -49,7 +50,9 @@ app.setHandler({
                 await rp(options).then((body) => {
                     let data = JSON.parse(body);
                     this.$user.$data.name = data.name;
-                    this.tell("I can see that you are a brand new user. Your account has been updated. Please restart this skill to see changes");
+                     let speech = 'I can see that you are a brand new user. I want you to create a 4 digit pin to keep your personal information more secure. Please say your four digit pin now.';
+                     var reprompt = 'Please say your four digit pin code';
+                     this.followUpState('PinState').ask(speech, reprompt);
                 });
             }
         }
@@ -71,6 +74,25 @@ app.setHandler({
         },
     },
 
+    PinState: {
+        PinCodeIntent() {
+            if (this.$user.$data.pin == null){
+                this.$user.$data.pin = this.$inputs.pin;
+                let speech = "Your pin code has been created. If the pin code  " + this.$user.$data.pin.value + " is correct, please confirm by saying , correct. If not, say reset";
+                this.followUpState('ConfirmPinState').ask(speech);
+            }
+        },
+    },
+    ConfirmPinState: {
+        ConfirmPinIntent() {
+                this.tell("You have successfully created a four digit pin for your account");
+        },
+        DeclinePinIntent() {
+             let speech = 'I can see that you are a brand new user. I want you to create a 4 digit pin to keep your personal information more secure. Please say your four digit pin now.';
+             var reprompt = 'Please say your four digit pin code';
+             this.followUpState('PinState').ask(speech, reprompt);
+        }
+    },
     async ISUStudyIntent() {
         let duration = this.$inputs.duration;
         var now = new Date();
@@ -250,17 +272,18 @@ app.setHandler({
         }
 
     },
-    ISURedbirdCardIntent() {
-        axios.post("tools.illinoisstate.edu/RedbirdCardBackend/PortalBalanceXML?ulid=tprince")
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+    async ISURedbirdCardIntent() {
 
-        this.tell('I made it here');
-    }
+         let options = {
+             method: 'POST',
+             uri: 'https://tools.illinoisstate.edu/RedbirdCardBackend/PortalBalanceXML?ulid=tprince', 
+         };
+         await rp(options).then((body) => {
+             let data = JSON.parse(xml2json.toJson(body));
+             this.$user.$data.balance = data.person.plans.plan.balance;
+             this.tell("Your rebird card has a balance of " + this.$user.$data.balance);
+         });
+    },
      
      RepeatIntent() {
          this.repeat();

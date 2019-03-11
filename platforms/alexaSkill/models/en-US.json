@@ -41,6 +41,30 @@
 					]
 				},
 				{
+					"name": "PinCodeIntent",
+					"samples": [
+						"{pin}"
+					],
+					"slots": [
+						{
+							"name": "pin",
+							"type": "AMAZON.FOUR_DIGIT_NUMBER"
+						}
+					]
+				},
+				{
+					"name": "ConfirmPinIntent",
+					"samples": [
+						"correct"
+					]
+				},
+				{
+					"name": "DeclinePinIntent",
+					"samples": [
+						"reset"
+					]
+				},
+				{
 					"name": "FinancialAidIntent",
 					"samples": [
 						"financial aid",

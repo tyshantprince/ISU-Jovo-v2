@@ -38,7 +38,32 @@
 			"my redbird card balance"
 		]
 	},
-	
+
+	{
+		"name": "PinCodeIntent",
+		"phrases": [
+			"{pin}"
+		],
+		"inputs": [{
+			"name": "pin",
+			"type": {
+				"alexa": "AMAZON.FOUR_DIGIT_NUMBER",
+				"dialogflow": "@sys.date-time"
+			}
+		}]
+	},
+	{
+		"name": "ConfirmPinIntent",
+		"phrases": [
+			"correct"
+		]
+	},
+	{
+		"name": "DeclinePinIntent",
+		"phrases": [
+			"reset"
+		]
+	},
 
 	{
 		"name": "FinancialAidIntent",

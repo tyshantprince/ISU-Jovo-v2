@@ -1,0 +1,5 @@
+{
+	"name": "DeclinePinIntent",
+	"auto": true,
+	"webhookUsed": true
+}
