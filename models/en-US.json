@@ -28,6 +28,17 @@
 			}
 		}]
 	},
+	{
+		"name": "ISURedbirdCardIntent",
+		"phrases": [
+			"What is my redbird card balance",
+			"how much is on my redbird card",
+			"How much money is on my redbird card",
+			"redbird card balance",
+			"my redbird card balance"
+		]
+	},
+	
 
 	{
 		"name": "FinancialAidIntent",

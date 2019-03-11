@@ -13,6 +13,7 @@ const { FileDb } = require('jovo-db-filedb');
 const iso = require('iso8601-duration');
 const axios = require('axios');
 const rp = require('request-promise');
+const xml2json = require('xml2json');
 
 const app = new App();
 
@@ -249,6 +250,18 @@ app.setHandler({
             console.log(start[0].attributes.longdate);
         }
 
+    },
+    async ISURedbirdCardIntent() {
+
+         let options = {
+             method: 'POST',
+             uri: 'https://tools.illinoisstate.edu/RedbirdCardBackend/PortalBalanceXML?ulid=tprince', 
+         };
+         await rp(options).then((body) => {
+             let data = JSON.parse(xml2json.toJson(body));
+             this.$user.$data.balance = data.person.plans.plan.balance;
+             this.tell("Your rebird card has a balance of " + this.$user.$data.balance);
+         });
     },
      
      RepeatIntent() {

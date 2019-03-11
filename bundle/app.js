@@ -12,6 +12,7 @@ const { FileDb } = require('jovo-db-filedb');
 
 const iso = require('iso8601-duration');
 const axios = require('axios');
+const rp = require('request-promise');
 
 const app = new App();
 
@@ -28,17 +29,35 @@ app.use(
 // ------------------------------------------------------------------
 
 app.setHandler({
-    LAUNCH() {
-
-        if (!this.$user.isNew()){
-            let speech = this.speechBuilder()
-                .addText("Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Welcome back " + this.$user.$data.name.value + ", what can I assist you with? ")
-            this.ask(speech);
+    async LAUNCH() {
+        if (this.$user.isNew()){
+            if (!this.$request.getAccessToken()) {
+                let speech = 'Powered by Amazon Alexa. Before we get started, I have to ask,  Are you an I.S.U student?';
+                var reprompt = 'Answer this with a yes or no';
+                this.followUpState('InfoState').ask(speech, reprompt);
+            }
+            else {
+                let token = this.$request.getAccessToken();
+                let options = {
+                    method: 'GET',
+                    uri: 'https://alexa-isu.auth0.com/userinfo', // You can find your URL on Client --> Settings --> 
+                    // Advanced Settings --> Endpoints --> OAuth User Info URL
+                    headers: {
+                        authorization: 'Bearer ' + token,
+                    }
+                };
+                await rp(options).then((body) => {
+                    let data = JSON.parse(body);
+                    this.$user.$data.name = data.name;
+                    this.tell("I can see that you are a brand new user. Your account has been updated. Please restart this skill to see changes");
+                });
+            }
         }
-        else
-            var speech = 'Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Before we get started, I have to ask,  Are you an I.S.U student?';
-            var reprompt = 'Answer this with a yes or no';
-            this.followUpState('InfoState').ask(speech, reprompt);
+        else{
+            let speech3 = this.speechBuilder()
+                .addText("Welcome to Illinois State University\'s Voice Service. Powered by Amazon Alexa. Welcome back " + this.$user.$data.name + ", what can I assist you with? ")
+            this.ask(speech3);
+        }
     },
 
     InfoState: {
@@ -54,8 +73,9 @@ app.setHandler({
 
     async ISUStudyIntent() {
         let duration = this.$inputs.duration;
-
-            const reminder = {
+        var now = new Date();
+        const reminder = {
+            "requestTime":  now.toISOString(),
                 "trigger": {
                     "type": "SCHEDULED_RELATIVE",
                     "offsetInSeconds": iso.toSeconds(iso.parse(duration.value)),
@@ -144,7 +164,7 @@ app.setHandler({
          }
 
          var advisor = '';
-         var name = this.user().data.name;
+         var name = this.$user.$data.name;
          var firstCharOfLastName = name.toLowerCase().charAt(name.indexOf(' ') + 1);
 
          switch (firstCharOfLastName) {
@@ -230,6 +250,17 @@ app.setHandler({
         }
 
     },
+    ISURedbirdCardIntent() {
+        axios.post("tools.illinoisstate.edu/RedbirdCardBackend/PortalBalanceXML?ulid=tprince")
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+        this.tell('I made it here');
+    }
      
      RepeatIntent() {
          this.repeat();

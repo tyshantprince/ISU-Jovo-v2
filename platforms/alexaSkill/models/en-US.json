@@ -19,20 +19,6 @@
 					]
 				},
 				{
-					"name": "ObtainNameIntent",
-					"samples": [
-						"my name is {name}",
-						"I am {name}",
-						"{name}"
-					],
-					"slots": [
-						{
-							"name": "name",
-							"type": "AMAZON.US_FIRST_NAME"
-						}
-					]
-				},
-				{
 					"name": "ISUStudyIntent",
 					"samples": [
 						"I want to study for {duration}"
@@ -42,6 +28,16 @@
 							"name": "duration",
 							"type": "AMAZON.DURATION"
 						}
+					]
+				},
+				{
+					"name": "ISURedbirdCardIntent",
+					"samples": [
+						"What is my redbird card balance",
+						"how much is on my redbird card",
+						"How much money is on my redbird card",
+						"redbird card balance",
+						"my redbird card balance"
 					]
 				},
 				{
