@@ -1,5 +1,17 @@
 {
 	"name": "ISUSportsIntent",
 	"auto": true,
-	"webhookUsed": true
+	"webhookUsed": true,
+	"responses": [
+		{
+			"parameters": [
+				{
+					"isList": false,
+					"name": "period",
+					"value": "$period",
+					"dataType": "@period"
+				}
+			]
+		}
+	]
 }

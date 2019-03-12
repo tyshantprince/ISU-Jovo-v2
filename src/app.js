@@ -233,56 +233,81 @@ app.setHandler({
     },
     
     ISUSportsIntent() {
-        this.ask('Which sport would you like to know more about?');
-    },
-    ISUSportsEventsIntent() {
-        if (this.$inputs.sport.toLowerCase == "baseball") {
-            this.toIntent("ISUBaseballIntent")
+        if (this.$inputs.period.value == "this week") {
+            let speech = 'Which sport would you like to know more about?';
+            let reprompt = 'Answer this a sport of your choice';
+            this.followUpState("ISUSportsEventsThisWeekState").ask(speech, reprompt);
+        }
+        if (this.$inputs.period.value == "today") {
+            let speech = 'Which sport would you like to know more about?';
+            let reprompt = 'Answer this a sport of your choice';
+            this.followUpState("ISUSportsEventsTodayState").ask(speech, reprompt);
         }
     },
-    async ISUBaseballIntent() {
-        var my_xml_string = "";
-         var options = {
-             method: 'GET',
-             uri: 'https://goredbirds.com/rss.aspx?path=baseball',
-             headers: {
-                 'User-Agent': 'Request-Promise',
-                 'Content-Type': 'text/xml',
-                 'Content-Length': Buffer.byteLength(my_xml_string)
-             },
-             body: my_xml_string,
-             json: true
-         };
 
-         await rp(options).then((body) => {
-            let data = JSON.parse(xml2json.toJson(body));
-            let items = data.rss.channel.item;
-            var myDate = moment(new Date(items[0].pubDate)).format('MMMM Do YYYY');
+    ISUSportsEventsThisWeekState: {
+        async ISUBaseballIntent() {
+            var my_xml_string = "";
+            var options = {
+                method: 'GET',
+                uri: 'https://goredbirds.com/rss.aspx?path=baseball',
+                headers: {
+                    'User-Agent': 'Request-Promise',
+                    'Content-Type': 'text/xml',
+                    'Content-Length': Buffer.byteLength(my_xml_string)
+                },
+                body: my_xml_string,
+                json: true
+            };
 
-            this.tell("On " + myDate + ", " + items[0].title);
-         });
-    }
-    ,
-    ISUEventsIntent() {
-        var request = new XMLHttpRequest();
-        var FEED_URL = 'http://feeds.illinoisstate.edu/events-hub/organizer-office-of-the-university-registrar.rss';
+            await rp(options).then((body) => {
+                let data = JSON.parse(xml2json.toJson(body));
+                let items = data.rss.channel.item;
+                let speech = this.speechBuilder();
+                items.forEach((item) => {
+                    var date = moment(new Date(item.pubDate)).format('MMMM Do YYYY');
+                    if (date > moment().startOf('week').format('MMMM Do YYYY') && date < moment().endOf('week').format('MMMM Do YYYY')) {
+                        speech.addText("On " + date + ", " + item.title)
+                                .addBreak('1s');
+;
+                    }
+                })
+            this.tell(speech);
+            });
 
-        request.open("GET", FEED_URL, false);
-        request.send();
-        var xml = request.responseXML;
-        // console.log(xml);
-        var items = xml.getElementsByTagName("item");
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-            var title = item.getElementsByTagName("title");
-            var start = item.getElementsByTagName("start");
-
-            console.log(start[0].attributes.longdate);
         }
+    },
+    ISUSportsEventsTodayState: {
+        async ISUBaseballIntent() {
+            var my_xml_string = "";
+            var options = {
+                method: 'GET',
+                uri: 'https://goredbirds.com/rss.aspx?path=baseball',
+                headers: {
+                    'User-Agent': 'Request-Promise',
+                    'Content-Type': 'text/xml',
+                    'Content-Length': Buffer.byteLength(my_xml_string)
+                },
+                body: my_xml_string,
+                json: true
+            };
 
+            await rp(options).then((body) => {
+                let data = JSON.parse(xml2json.toJson(body));
+                let items = data.rss.channel.item;
+                let speech = this.speechBuilder();
+                items.forEach((item) => {
+                    var date = moment(new Date(item.pubDate)).format('MMMM Do YYYY');
+                    if (moment(new Date(item.pubDate)).isBetween(moment().startOf('day'), moment().endOf('day'))) {
+                        speech.addText("On " + date + ", " + item.title)
+                                .addBreak('1s');
+                    }
+                })
+                this.tell(speech);
+            });
+        }
     },
     async ISURedbirdCardIntent() {
-
          let options = {
              method: 'POST',
              uri: 'https://tools.illinoisstate.edu/RedbirdCardBackend/PortalBalanceXML?ulid=tprince', 

@@ -136,8 +136,20 @@
 		"name": "ISUSportsIntent",
 		"phrases": [
 			"tell me about sports",
+			"tell me about sports {period}",	
 			"tell me about i.s.u sports",
-			"tell me about Illinois State Sports"
+			"tell me about i.s.u sports {period}",	
+			"tell me about Illinois State Sports",
+			"tell me about Illinois State Sports {period}"
+		],
+		"inputs": [
+			{
+				"name": "period",
+				"type": {
+					"alexa": "period",
+					"dialogflow": "@sys.date-time"
+				}
+			}
 		]
 	},
 	{
@@ -171,6 +183,19 @@
 			}
 		}
 	},
+	"inputTypes": [
+		{
+			"name": "period",
+			"values": [
+				{
+					"value": "this week"
+				},
+				{
+					"value": "today"
+				}
+			]
+		}
+	],
 	"dialogflow": {
 		"intents": [
 			{

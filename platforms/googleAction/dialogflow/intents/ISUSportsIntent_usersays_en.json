@@ -12,6 +12,22 @@
 	{
 		"data": [
 			{
+				"text": "tell me about sports ",
+				"userDefined": false
+			},
+			{
+				"text": "period",
+				"userDefined": true,
+				"alias": "period",
+				"meta": "@period"
+			}
+		],
+		"isTemplate": false,
+		"count": 0
+	},
+	{
+		"data": [
+			{
 				"text": "tell me about i.s.u sports",
 				"userDefined": false
 			}
@@ -22,8 +38,40 @@
 	{
 		"data": [
 			{
+				"text": "tell me about i.s.u sports ",
+				"userDefined": false
+			},
+			{
+				"text": "period",
+				"userDefined": true,
+				"alias": "period",
+				"meta": "@period"
+			}
+		],
+		"isTemplate": false,
+		"count": 0
+	},
+	{
+		"data": [
+			{
 				"text": "tell me about Illinois State Sports",
 				"userDefined": false
+			}
+		],
+		"isTemplate": false,
+		"count": 0
+	},
+	{
+		"data": [
+			{
+				"text": "tell me about Illinois State Sports ",
+				"userDefined": false
+			},
+			{
+				"text": "period",
+				"userDefined": true,
+				"alias": "period",
+				"meta": "@period"
 			}
 		],
 		"isTemplate": false,

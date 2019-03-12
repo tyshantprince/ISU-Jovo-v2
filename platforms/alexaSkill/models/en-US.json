@@ -2,7 +2,25 @@
 	"interactionModel": {
 		"languageModel": {
 			"invocationName": "i.s.u",
-			"types": [],
+			"types": [
+				{
+					"name": "period",
+					"values": [
+						{
+							"id": null,
+							"name": {
+								"value": "this week"
+							}
+						},
+						{
+							"id": null,
+							"name": {
+								"value": "today"
+							}
+						}
+					]
+				}
+			],
 			"intents": [
 				{
 					"name": "YesIntent",
@@ -135,8 +153,17 @@
 					"name": "ISUSportsIntent",
 					"samples": [
 						"tell me about sports",
+						"tell me about sports {period}",
 						"tell me about i.s.u sports",
-						"tell me about Illinois State Sports"
+						"tell me about i.s.u sports {period}",
+						"tell me about Illinois State Sports",
+						"tell me about Illinois State Sports {period}"
+					],
+					"slots": [
+						{
+							"name": "period",
+							"type": "period"
+						}
 					]
 				},
 				{
