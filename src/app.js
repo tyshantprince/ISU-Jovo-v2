@@ -301,6 +301,34 @@ app.setHandler({
                 })
                 this.tell(speech);
             });
+        },
+        async ISUMensTennisIntent() {
+            var my_xml_string = "";
+            var options = {
+                method: 'GET',
+                uri: 'https://goredbirds.com/rss.aspx?path=mten',
+                headers: {
+                    'User-Agent': 'Request-Promise',
+                    'Content-Type': 'text/xml',
+                    'Content-Length': Buffer.byteLength(my_xml_string)
+                },
+                body: my_xml_string,
+                json: true
+            };
+
+            await rp(options).then((body) => {
+                let data = JSON.parse(xml2json.toJson(body));
+                let items = data.rss.channel.item;
+                let speech = this.speechBuilder();
+                items.forEach((item) => {
+                    var date = moment(new Date(item.pubDate)).format('MMMM Do YYYY');
+                    if (date > moment().startOf('week').format('MMMM Do YYYY') && date < moment().endOf('week').format('MMMM Do YYYY')) {
+                        speech.addText("On " + date + ", " + item.title)
+                            .addBreak('1s');
+                    }
+                })
+                this.tell(speech);
+            });
         }
     },
     ISUSportsEventsTodayState: {
@@ -337,6 +365,34 @@ app.setHandler({
             var options = {
                 method: 'GET',
                 uri: 'https://goredbirds.com/rss.aspx?path=mgolf',
+                headers: {
+                    'User-Agent': 'Request-Promise',
+                    'Content-Type': 'text/xml',
+                    'Content-Length': Buffer.byteLength(my_xml_string)
+                },
+                body: my_xml_string,
+                json: true
+            };
+
+            await rp(options).then((body) => {
+                let data = JSON.parse(xml2json.toJson(body));
+                let items = data.rss.channel.item;
+                let speech = this.speechBuilder();
+                items.forEach((item) => {
+                    var date = moment(new Date(item.pubDate)).format('MMMM Do YYYY');
+                    if (moment(new Date(item.pubDate)).isBetween(moment().startOf('day'), moment().endOf('day'))) {
+                        speech.addText("On " + date + ", " + item.title)
+                            .addBreak('1s');
+                    }
+                })
+                this.tell(speech);
+            });
+        },
+        async ISUMensTennisIntent() {
+            var my_xml_string = "";
+            var options = {
+                method: 'GET',
+                uri: 'https://goredbirds.com/rss.aspx?path=mten',
                 headers: {
                     'User-Agent': 'Request-Promise',
                     'Content-Type': 'text/xml',

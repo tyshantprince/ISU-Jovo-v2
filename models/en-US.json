@@ -163,6 +163,12 @@
 		"phrases": [
 			"men's golf"
 		]
+	},
+	{
+		"name": "ISUMensTennisIntent",
+		"phrases": [
+			"men's tennis"
+		]
 	}
 ],
 	"alexa": {
