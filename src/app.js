@@ -130,8 +130,9 @@ app.setHandler({
             }
     },
 
-     ISUTechProblemsIntent() {
-         this.ask("At Illinois State University, for technology related issues, you can visit Tech Zone Service Center located in the Bone, contact I.S.U ResNet, or contact the University Tech Support Center. Which service would you like more information on?")
+    ISUTechProblemsIntent() {
+        let speech = '<speak>At Illinois State University, for technology related issues, you can visit Tech Zone Service Center located in the Bone, contact I.S.U <emphasis><phoneme alphabet="ipa" ph="r\ Es.nEt">ResNet</phoneme></emphasis>, or contact the University Tech Support Center. Which service would you like more information on?</speak>';
+        this.ask(speech);
      },
 
      ISUTechZoneIntent(){
@@ -327,6 +328,7 @@ app.setHandler({
                             .addBreak('1s');
                     }
                 })
+
                 this.tell(speech);
             });
         },
@@ -385,7 +387,10 @@ app.setHandler({
                                 .addBreak('1s');
                     }
                 })
-                this.tell(speech);
+                if (speech.toString() == "")
+                    this.tell("Sorry, there are no Baseball events posted today.");
+                else
+                    this.tell(speech);
             });
         },
         async ISUMensGolfIntent() {
@@ -413,7 +418,10 @@ app.setHandler({
                             .addBreak('1s');
                     }
                 })
-                this.tell(speech);
+                if (speech.toString() == "")
+                    this.tell("Sorry, there are no Mens Golf events posted today.");
+                else
+                    this.tell(speech);
             });
         },
         async ISUMensTennisIntent() {
@@ -441,7 +449,10 @@ app.setHandler({
                             .addBreak('1s');
                     }
                 })
-                this.tell(speech);
+                if (speech.toString() == "")
+                    this.tell("Sorry, there are no Mens Tennis events posted today.");
+                else
+                    this.tell(speech);
             });
         },
         async ISUSoftballIntent() {
@@ -469,7 +480,10 @@ app.setHandler({
                             .addBreak('1s');
                     }
                 })
-                this.tell(speech);
+                if(speech.toString() == "")
+                    this.tell("Sorry, there are no Soccer events posted today.");
+                else
+                    this.tell(speech);
             });
         }
     },
