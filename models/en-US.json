@@ -169,6 +169,12 @@
 		"phrases": [
 			"men's tennis"
 		]
+	},
+	{
+		"name": "ISUSoftballIntent",
+		"phrases": [
+			"softball"
+		]
 	}
 ],
 	"alexa": {
