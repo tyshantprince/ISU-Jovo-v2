@@ -78,7 +78,8 @@ app.setHandler({
     PinState: {
         PinCodeIntent() {
             this.$user.$data.pin = this.$inputs.pin;
-            let speech = "Your pin code has been created. If the pin code  " + this.$user.$data.pin.value + " is correct, please confirm by saying , correct. If not, say reset";
+            let speech = this.speechBuilder();
+            speech.addText("Your pin code has been created. If the pin code  ").addSayAsCharacters(this.$user.$data.pin.value).addText(" is correct, please confirm by saying , correct. If not, say reset");
             this.followUpState('ConfirmPinState').ask(speech);
         },
     },
