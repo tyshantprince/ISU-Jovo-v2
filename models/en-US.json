@@ -157,6 +157,12 @@
 		"phrases": [
 			"baseball"
 		]
+	},
+	{
+		"name": "ISUMensGolfIntent",
+		"phrases": [
+			"men's golf"
+		]
 	}
 ],
 	"alexa": {
