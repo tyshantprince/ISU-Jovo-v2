@@ -173,6 +173,24 @@
 					]
 				},
 				{
+					"name": "ISUMensGolfIntent",
+					"samples": [
+						"men's golf"
+					]
+				},
+				{
+					"name": "ISUMensTennisIntent",
+					"samples": [
+						"men's tennis"
+					]
+				},
+				{
+					"name": "ISUSoftballIntent",
+					"samples": [
+						"softball"
+					]
+				},
+				{
 					"name": "AMAZON.CancelIntent",
 					"samples": []
 				},
