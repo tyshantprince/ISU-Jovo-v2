@@ -489,15 +489,24 @@ app.setHandler({
         }
     },
     async ISURedbirdCardIntent() {
-         let options = {
-             method: 'POST',
-             uri: 'https://tools.illinoisstate.edu/RedbirdCardBackend/PortalBalanceXML?ulid=tprince', 
-         };
-         await rp(options).then((body) => {
-             let data = JSON.parse(xml2json.toJson(body));
-             this.$user.$data.balance = data.person.plans.plan.balance;
-             this.tell("Your redbird card has a balance of " + this.$user.$data.balance);
-         });
+        if (!this.$alexaSkill.$dialog.isCompleted()) {
+            this.$alexaSkill.$dialog.delegate();
+        } else if(!this.$inputs.pin.value) {
+            this.$alexaSkill.$dialog.elicitSlot('pin', 'What is your four digit pin code?', 'What is your four digit pin code?');
+        }
+        else if (this.$inputs.pin.value != this.$user.$data.pin.value)
+            this.tell("Sorry, the pin you stated was invalid. I cannot complete this request for you.")
+        else {
+             let options = {
+                 method: 'POST',
+                 uri: 'https://tools.illinoisstate.edu/RedbirdCardBackend/PortalBalanceXML?ulid=tprince',
+             };
+             await rp(options).then((body) => {
+                 let data = JSON.parse(xml2json.toJson(body));
+                 this.$user.$data.balance = data.person.plans.plan.balance;
+                 this.tell("Your redbird card has a balance of " + this.$user.$data.balance);
+             });
+        } 
     },
      
      RepeatIntent() {

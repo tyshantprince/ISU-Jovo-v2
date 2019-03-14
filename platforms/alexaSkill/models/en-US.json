@@ -56,6 +56,12 @@
 						"How much money is on my redbird card",
 						"redbird card balance",
 						"my redbird card balance"
+					],
+					"slots": [
+						{
+							"name": "pin",
+							"type": "AMAZON.FOUR_DIGIT_NUMBER"
+						}
 					]
 				},
 				{
@@ -137,10 +143,10 @@
 				{
 					"name": "ISUITHelpIntent",
 					"samples": [
-						"IT Help",
-						"ithelp",
-						"tell me about it help",
-						"how do i contact it help"
+						"I.T Help",
+						"i.t help",
+						"tell me about i.t help",
+						"how do i contact i.t help"
 					]
 				},
 				{
@@ -205,6 +211,41 @@
 				{
 					"name": "AMAZON.RepeatIntent",
 					"samples": []
+				}
+			]
+		},
+		"prompts": [
+			{
+				"id": "Elicit.Slot.1120021987437.905332624800",
+				"variations": [
+					{
+						"type": "PlainText",
+						"value": "Please confirm your four digit pin code"
+					},
+					{
+						"type": "PlainText",
+						"value": "What is your four digit pin code?"
+					}
+				]
+			}
+		],
+		"dialog": {
+			"intents": [
+				{
+					"name": "ISURedbirdCardIntent",
+					"confirmationRequired": false,
+					"prompts": {},
+					"slots": [
+						{
+							"name": "pin",
+							"type": "AMAZON.FOUR_DIGIT_NUMBER",
+							"confirmationRequired": false,
+							"elicitationRequired": true,
+							"prompts": {
+								"elicitation": "Elicit.Slot.1120021987437.905332624800"
+							}
+						}
+					]
 				}
 			]
 		}

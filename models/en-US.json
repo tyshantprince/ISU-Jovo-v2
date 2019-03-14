@@ -36,7 +36,14 @@
 			"How much money is on my redbird card",
 			"redbird card balance",
 			"my redbird card balance"
-		]
+		],
+		"inputs": [{
+			"name": "pin",
+			"type": {
+				"alexa": "AMAZON.FOUR_DIGIT_NUMBER",
+				"dialogflow": "@sys.date-time"
+			}
+		}]
 	},
 
 	{
@@ -179,6 +186,36 @@
 ],
 	"alexa": {
 		"interactionModel": {
+			"prompts": [{
+					"id": "Elicit.Slot.1120021987437.905332624800",
+					"variations": [{
+							"type": "PlainText",
+							"value": "Please confirm your four digit pin code"
+						},
+						{
+							"type": "PlainText",
+							"value": "What is your four digit pin code?"
+						}
+					]
+				}
+			],
+			"dialog": {
+				"intents": [{
+					"name": "ISURedbirdCardIntent",
+					"confirmationRequired": false,
+					"prompts": {},
+					"slots": [{
+							"name": "pin",
+							"type": "AMAZON.FOUR_DIGIT_NUMBER",
+							"confirmationRequired": false,
+							"elicitationRequired": true,
+							"prompts": {
+								"elicitation": "Elicit.Slot.1120021987437.905332624800"
+							}
+						}
+					]
+				}]
+			},
 			"languageModel": {
 				"intents": [
 					{

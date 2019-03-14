@@ -78,7 +78,8 @@ app.setHandler({
     PinState: {
         PinCodeIntent() {
             this.$user.$data.pin = this.$inputs.pin;
-            let speech = "Your pin code has been created. If the pin code  " + this.$user.$data.pin.value + " is correct, please confirm by saying , correct. If not, say reset";
+            let speech = this.speechBuilder();
+            speech.addText("Your pin code has been created. If the pin code  ").addSayAsCharacters(this.$user.$data.pin.value).addText(" is correct, please confirm by saying , correct. If not, say reset");
             this.followUpState('ConfirmPinState').ask(speech);
         },
     },
@@ -130,8 +131,9 @@ app.setHandler({
             }
     },
 
-     ISUTechProblemsIntent() {
-         this.ask("At Illinois State University, for technology related issues, you can visit Tech Zone Service Center located in the Bone, contact I.S.U ResNet, or contact the University Tech Support Center. Which service would you like more information on?")
+    ISUTechProblemsIntent() {
+        let speech = '<speak>At Illinois State University, for technology related issues, you can visit Tech Zone Service Center located in the Bone, contact I.S.U <emphasis><phoneme alphabet="ipa" ph="r\ Es.nEt">ResNet</phoneme></emphasis>, or contact the University Tech Support Center. Which service would you like more information on?</speak>';
+        this.ask(speech);
      },
 
      ISUTechZoneIntent(){
@@ -327,6 +329,7 @@ app.setHandler({
                             .addBreak('1s');
                     }
                 })
+
                 this.tell(speech);
             });
         },
@@ -385,7 +388,10 @@ app.setHandler({
                                 .addBreak('1s');
                     }
                 })
-                this.tell(speech);
+                if (speech.toString() == "")
+                    this.tell("Sorry, there are no Baseball events posted today.");
+                else
+                    this.tell(speech);
             });
         },
         async ISUMensGolfIntent() {
@@ -413,7 +419,10 @@ app.setHandler({
                             .addBreak('1s');
                     }
                 })
-                this.tell(speech);
+                if (speech.toString() == "")
+                    this.tell("Sorry, there are no Mens Golf events posted today.");
+                else
+                    this.tell(speech);
             });
         },
         async ISUMensTennisIntent() {
@@ -441,7 +450,10 @@ app.setHandler({
                             .addBreak('1s');
                     }
                 })
-                this.tell(speech);
+                if (speech.toString() == "")
+                    this.tell("Sorry, there are no Mens Tennis events posted today.");
+                else
+                    this.tell(speech);
             });
         },
         async ISUSoftballIntent() {
@@ -469,20 +481,30 @@ app.setHandler({
                             .addBreak('1s');
                     }
                 })
-                this.tell(speech);
+                if(speech.toString() == "")
+                    this.tell("Sorry, there are no Soccer events posted today.");
+                else
+                    this.tell(speech);
             });
         }
     },
     async ISURedbirdCardIntent() {
-         let options = {
-             method: 'POST',
-             uri: 'https://tools.illinoisstate.edu/RedbirdCardBackend/PortalBalanceXML?ulid=tprince', 
-         };
-         await rp(options).then((body) => {
-             let data = JSON.parse(xml2json.toJson(body));
-             this.$user.$data.balance = data.person.plans.plan.balance;
-             this.tell("Your redbird card has a balance of " + this.$user.$data.balance);
-         });
+        if (!this.$alexaSkill.$dialog.isCompleted()) {
+            this.$alexaSkill.$dialog.delegate();
+        } else if(!this.$inputs.pin.value) {
+            this.$alexaSkill.$dialog.elicitSlot('pin', 'What is your four digit pin code?', 'What is your four digit pin code?');
+        }
+        else {
+             let options = {
+                 method: 'POST',
+                 uri: 'https://tools.illinoisstate.edu/RedbirdCardBackend/PortalBalanceXML?ulid=tprince',
+             };
+             await rp(options).then((body) => {
+                 let data = JSON.parse(xml2json.toJson(body));
+                 this.$user.$data.balance = data.person.plans.plan.balance;
+                 this.tell("Your redbird card has a balance of " + this.$user.$data.balance);
+             });
+        } 
     },
      
      RepeatIntent() {

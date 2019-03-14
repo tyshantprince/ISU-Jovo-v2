@@ -1,5 +1,17 @@
 {
 	"name": "ISURedbirdCardIntent",
 	"auto": true,
-	"webhookUsed": true
+	"webhookUsed": true,
+	"responses": [
+		{
+			"parameters": [
+				{
+					"isList": false,
+					"name": "pin",
+					"value": "$pin",
+					"dataType": "@sys.date-time"
+				}
+			]
+		}
+	]
 }
